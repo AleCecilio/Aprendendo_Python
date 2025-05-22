@@ -1,6 +1,3 @@
-#!python
-
-
 def fibonacci(quantidade, sequencia = (0, 1)):
     if len(sequencia) == quantidade:
        return sequencia

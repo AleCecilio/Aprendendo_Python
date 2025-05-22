@@ -1,5 +1,3 @@
-#!python 
-
 def Conceitos_Notas(valor):
     nota = float(valor)
     if nota > 10:

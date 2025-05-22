@@ -1,5 +1,4 @@
 #Calculando a Área de um aCircunferência 
-#!python 
 #import math 
 from math import pi
 

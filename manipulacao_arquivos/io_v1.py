@@ -1,5 +1,3 @@
-#!python
-
 arquivo = open('pessoas.csv')
 dados = arquivo.read()
 arquivo.close()

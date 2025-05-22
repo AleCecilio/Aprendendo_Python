@@ -1,6 +1,3 @@
-#!python
-
-
 def fibonacci(limite):
     penultimo = 0
     ultimo = 1

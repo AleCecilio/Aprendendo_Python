@@ -1,6 +1,3 @@
-#!python
-
-
 def fibonacci(quantidade):
     resultado = [0,1]
     for _ in range(2,quantidade):

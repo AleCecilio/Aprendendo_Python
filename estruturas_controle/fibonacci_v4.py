@@ -1,6 +1,3 @@
-#!python
-
-
 def fibonacci(limite):
     resultado = [0,1]
     while resultado[-1] < limite:

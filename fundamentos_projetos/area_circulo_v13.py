@@ -1,4 +1,3 @@
-#!python
 from math import pi
 import sys
 import errno

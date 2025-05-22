@@ -1,4 +1,3 @@
-#!python
 from math import pi
 
 print('π = ', pi) #math.pi

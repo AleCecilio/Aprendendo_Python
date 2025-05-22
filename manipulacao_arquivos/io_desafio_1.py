@@ -1,5 +1,3 @@
-#!python 
-
 import csv
 from urllib import request
 
