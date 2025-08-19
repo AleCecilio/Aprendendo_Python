@@ -6,7 +6,7 @@ def fibonacci():
         proximo = penultimo + ultimo
         print(proximo, end = ',')
         penultimo = ultimo
-        ultimo - proximo
+        ultimo = proximo
 
 
 if __name__ == '__main__':

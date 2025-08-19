@@ -11,7 +11,7 @@ for posicao, nome in enumerate(aprovados):
     print(f'{posicao +1})', nome)
 
 dias_semana = ('Domingo', 'Segunda', 'Terca',
-              'Quarta', 'Quinta', 'Sexta','Sabdo')
+              'Quarta', 'Quinta', 'Sexta','Sabado')
 
 for dia in dias_semana:
     print(f'Hoje eh {dia}')

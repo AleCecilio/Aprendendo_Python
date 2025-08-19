@@ -5,8 +5,8 @@ with open('pessoas.csv') as arquivo:
             print('Nome : {},  Idade : {}'.format(*pessoa), file = saida)
 
     
-if arquivo.close:
+if arquivo.closed:
     print('O Arquivo foi fechado!')
 
-if saida.close:
+if saida.closed:
     print('O Arquivo de saida foi fechado!')
