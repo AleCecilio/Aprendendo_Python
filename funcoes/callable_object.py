@@ -1,10 +1,10 @@
 class Potencia: 
     # Calcular uma potência especéficada
     def __init__(self, expoente):
-        self.exporente = expoente
+        self.expoente = expoente
 
     def __call__(self, base):
-        return base ** self.exporente
+        return base ** self.expoente
     
 
 if __name__ == '__main__': 
