@@ -50,15 +50,15 @@ def ler_Arquivo(pessoas):
 
 def menu_Principal (pessoas):
     while True: 
-        print('Menu\n')
-        print('(1) Adicionar Pessoa\n')
-        print('(2) Pesquisar por Nome\n')
-        print('(3) Pesquisar Por Id\n')
-        print('(4) Pesquisar por Cidade\n')
-        print('(5) Editar Pessoa\n')
-        print('(6) Excluir Pessoa\n')
-        print('(7) Salvar e Sair\n')
-        print('(0) Sair Sem Salvar\n')
+        print('\nMenu')
+        print('(1) Adicionar Pessoa')
+        print('(2) Pesquisar por Nome')
+        print('(3) Pesquisar Por Id')
+        print('(4) Pesquisar por Cidade')
+        print('(5) Editar Pessoa')
+        print('(6) Excluir Pessoa')
+        print('(7) Salvar e Sair')
+        print('(0) Sair Sem Salvar')
 
         op = verifica_Int("Escolha uma opção: > ", 0, 7)
 
@@ -83,12 +83,12 @@ def menu_Principal (pessoas):
 
 
 def adicionar_Pessoas (pessoas):
-    print('ADICIONAR PESSOA\n')
-    id = max([p['id'] for p in pessoas], default=-1)+1
-
+    print('\nADICIONAR PESSOA')
+    
     nome = verificar_String('Digite o nome da pessoa: ')
     idade = verifica_Int('Digite a Idade da Pessoa: > ', 0)
     cidade = verificar_String('Digite a cidade da pessoa: ')
+    id = max([p['id'] for p in pessoas], default=-1)+1
 
     pessoa = {
         'nome': nome,
@@ -103,7 +103,7 @@ def adicionar_Pessoas (pessoas):
 
 def pesquisa_Nome(pessoas):
 
-    print('PESQUISA POR NOME\n')
+    print('\nPESQUISA POR NOME')
     nome = verificar_String('Digite o nome: ')
     encontrado = False
 
@@ -117,7 +117,7 @@ def pesquisa_Nome(pessoas):
 
 
 def pesquisar_Id(pessoas):
-    print('PESQUISAR POR ID:\n')
+    print('\nPESQUISAR POR ID:')
     id_busca = verifica_Int('Digite o ID da Pessoa: > ', 0)
     
     for pessoa in pessoas:
@@ -130,7 +130,7 @@ def pesquisar_Id(pessoas):
 
 
 def pesquisa_Cidade(pessoas):
-    print('PESQUISA POR CIDADE\n')
+    print('\nPESQUISA POR CIDADE')
     cidade = verificar_String('Digite a cidade: ')
     encontrado = False
     nPessoas_cidade = 0
@@ -148,7 +148,7 @@ def pesquisa_Cidade(pessoas):
 
 
 def editar_Pessoa(pessoas):
-    print('EDITAR PESSOA\n')
+    print('\nEDITAR PESSOA')
     pessoa = pesquisar_Id(pessoas)
     if pessoa is not None:
 
@@ -180,7 +180,7 @@ def editar_Pessoa(pessoas):
 
 
 def excluir_Pessoa(pessoas):
-    print('EXLUIR PESSOA:\n')
+    print('\nEXLUIR PESSOA:')
     pessoa = pesquisar_Id(pessoas)
     if pessoa is None:
         print("Pessoa não encontrada. Voltando ao menu...")
@@ -206,20 +206,20 @@ def salvar_CSV (pessoas):
             escritor = csv.DictWriter(saida, fieldnames=['nome', 'idade', 'cidade', 'id'])
             escritor.writeheader()
             escritor.writerows(pessoas)
-            print('Arquivo salvo com sucesso!')
+            print('\nArquivo salvo com sucesso!')
     except OSError as e:
         if e.errno == errno.EACCES:
-            print("Erro: Sem permissão para salvar o arquivo.")
+            print("\nErro: Sem permissão para salvar o arquivo.")
         elif e.errno == errno.ENOSPC:
-            print("Erro: Disco cheio, impossível salvar o arquivo.")
+            print("\nErro: Disco cheio, impossível salvar o arquivo.")
         elif e.errno == errno.EROFS:
-            print("Erro: Sistema de arquivos somente leitura.")
+            print("\nErro: Sistema de arquivos somente leitura.")
         else:
-            print(f"Erro ao salvar o arquivo: {e}")
+            print(f"\nErro ao salvar o arquivo: {e}")
 
 
 def encerrar_Programa():
-    sys.exit('Encerrando Programa...')
+    sys.exit('\nEncerrando Programa...')
 
 
 if __name__ == '__main__':
