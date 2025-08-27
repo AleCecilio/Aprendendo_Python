@@ -9,14 +9,25 @@
 
 import csv
 import errno
-import re
 import hashlib
+import sys
+import f_entradas
+
+
+# --- Decorator Para Checar Login ---
+def requer_login(funcao):
+    def protecao (*args, **kwargs):
+        if not args[0]:
+            print("Você precisa estar logado para usar essa função!")
+            return None
+        return funcao(*args, **kwargs)
+    return protecao
 
 
 # --- Ler os Usuários do Arquivo ---
 def ler_Arquivo (usuarios): 
     try:
-        with open('usuarios.csv', newline='', ecolding='utf-8') as arquivo:
+        with open('usuarios.csv', newline='', encoding='utf-8') as arquivo:
             leitor = csv.DictReader(arquivo)
             for linha in leitor:
                 linha['id'] = int(linha['id'])
@@ -26,13 +37,15 @@ def ler_Arquivo (usuarios):
 
 
 # --- Salvar Novos Usuários ---
-def ecrever_arquivo (usuarios):
+@requer_login
+def escrever_arquivo (usuaruio_logado, usuarios):
     try:
         with open('usuarios.csv', 'w', newline='', encoding='utf-8') as arquivo:
             escritor = csv.DictWriter(arquivo, fieldnames=['id', 'nome', 'senha'])
             escritor.writeheader()
-            escritor.writerow(usuarios)
+            escritor.writerows(usuarios)
             print('\nArquivo salvo com sucesso!')
+            return True
     except OSError as e:
         if e.errno == errno.EACCES:
             print("\nErro: Sem permissão para salvar o arquivo.")
@@ -42,15 +55,12 @@ def ecrever_arquivo (usuarios):
             print("\nErro: Sistema de arquivos somente leitura.")
         else:
             print(f"\nErro ao salvar o arquivo: {e}")
+        return False
 
 
-# --- Vefica se a String é Válida ---
-def verifica_String(prompt):
-    string = input(prompt).strip()
-    while string == '':
-        print(f'o campo {string} não pode estar vazio!!!')
-        string = input(prompt).strip()
-    return string
+# --- Finalizar a Execução do Programa ---
+def sair_Programa():
+    sys.exit('Encerrando Programa!!\n')
 
 
 # --- Criptografar A Senha ---
@@ -60,30 +70,15 @@ def criptografar_Senha(senha):
     return senha
 
 
-# -- Verifica se a Senha é Válida ---
-def vericar_Senha():
-    while True:
-        senha = verifica_String('Senha (Númros, Letras e Símbolos): -> ')
-        if len(senha) < 6 or len(senha) > 6:
-            print('A Senha deve ter 6 caracteres.')
-        elif not re.search(r"[A-Z]", senha):
-            print("A senha deve ter pelo menos uma letra maiúscula.")
-        elif not re.search(r"[0-9]", senha):
-            print("A senha deve ter pelo menos um número.")
-        elif not re.search(r"[!@#$%^&*()_+=\-]", senha):
-            print("A senha deve ter pelo menos um símbolo especial.")
-        else: 
-            break
-    senha = criptografar_Senha(senha)
-    return senha
-
-
 # --- Cadastro de Usuários ---
-def cadatro_Usuarios(usuarios):
-    print('CADASTRO DE USUÁRIOS')
-    nome = verifica_String('Nome de Usuário: ')
-    senha = vericar_Senha()
-    id = 100 + (max([u['id'] for u in usuarios], default=0) + 1)
+def cadastro_Usuarios(usuarios):
+    print('\nCADASTRO DE USUÁRIOS')
+
+    nome = f_entradas.verifica_String('Nome de Usuário: ')
+
+    senha = criptografar_Senha(f_entradas.verificar_Senha())
+
+    id = (max([u['id'] for u in usuarios], default=99) + 1) 
     print(f'O ID do Usuário {nome} é: {id}!')
     
     usuario = {
@@ -101,13 +96,65 @@ def cadatro_Usuarios(usuarios):
 
 # --- Fazer Login ---
 def fazer_Login(usuarios):
-    print('Login De Usuário')
+    print('\nLogin De Usuário')
+    tentativas = 0
+    autenticado = None
+    while tentativas < 3:
+        nome = f_entradas.verifica_String('Nome de Usuário: ')
+        senha = criptografar_Senha(f_entradas.verificar_Senha())
+        for usuario in usuarios:
+            if usuario['nome'].lower() == nome.lower() and usuario['senha'] == senha:
+                autenticado = usuario
+                break
+        if autenticado:
+            print('\nLogin Efetuado Com Sucesso!!!')
+            print(f"Seja Bem Vindo, {autenticado['nome']}!")
+            return autenticado
+        else:
+            tentativas +=1
+            print(f'Usuário ou senha inválidos! Tentativa {tentativas}/3')
+
+    print('Você exedeu o número de tentativas!!!')
+    return None
 
 
-'''
-O que falta?
-Fazer a fazer_Login, o main, se o login etiver incorreto 3 vezes deve retornar um erro e bloquear o sistema e sair.
+# --- Mostra os Dados Do Usuário Atual ---
+@requer_login
+def mostrar_dados(usuario_logado):
+    print('\nDados do Usuário')
+    print(f"Nome: {usuario_logado['nome']}")
+    print(f"ID: {usuario_logado['id']}")
 
-Lembrete:
-    No ex 003 devo analisar o uso do @log
-'''
+
+# --- Menu Principal --- 
+def menu(usuarios):
+    usuario_logado = None
+    while True:
+        print('\nMENU')
+        print('Digite uma Opção')
+        print('(1) Cadastrar Usuário')
+        print('(2) Fazer Login')
+        print('(3) Mostrar Dados Do Usuário')
+        print('(4) Sair e Salvar')
+        print('(5) Sair sem Salvar')
+        op = f_entradas.verifica_Int('Opção: -> ',1,5)
+
+        match op:
+            case 1:
+                cadastro_Usuarios(usuarios)
+            case 2:
+                usuario_logado = fazer_Login(usuarios)
+            case 3:
+                mostrar_dados(usuario_logado)
+            case 4:
+                if escrever_arquivo(usuario_logado, usuarios):
+                    sair_Programa()
+            case 5: 
+                sair_Programa()
+
+
+# --- Execução --- 
+if __name__ == '__main__':
+    usuarios = []
+    ler_Arquivo(usuarios)
+    menu(usuarios)
