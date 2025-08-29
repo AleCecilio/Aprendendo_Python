@@ -95,7 +95,6 @@ def checar_Estoque(produto, estoque_baixo):
             estoque_baixo.append(baixo)
 
 
-
 # --- Cadastro de Produto ---
 def cadastrar_produtos(produtos, estoque_baixo):
     print('\n--- CADASTRO DE PRODUTOS ---')

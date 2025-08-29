@@ -1,0 +1,54 @@
+{
+  "quiz": [
+    {
+      "pergunta": "Qual é a capital do Brasil?",
+      "alternativas": [
+        "A) Rio de Janeiro",
+        "B) São Paulo",
+        "C) Brasília",
+        "D) Belo Horizonte"
+      ],
+      "resposta_correta": "C"
+    },
+    {
+      "pergunta": "Quem desenvolveu a Teoria da Relatividade?",
+      "alternativas": [
+        "A) Isaac Newton",
+        "B) Albert Einstein",
+        "C) Nikola Tesla",
+        "D) Galileu Galilei"
+      ],
+      "resposta_correta": "B"
+    },
+    {
+      "pergunta": "Qual linguagem é conhecida como 'linguagem da web'?",
+      "alternativas": [
+        "A) Python",
+        "B) C++",
+        "C) Java",
+        "D) JavaScript"
+      ],
+      "resposta_correta": "D"
+    },
+    {
+      "pergunta": "Qual planeta é conhecido como o Planeta Vermelho?",
+      "alternativas": [
+        "A) Vênus",
+        "B) Marte",
+        "C) Júpiter",
+        "D) Saturno"
+      ],
+      "resposta_correta": "B"
+    },
+    {
+      "pergunta": "Quem pintou a Mona Lisa?",
+      "alternativas": [
+        "A) Michelangelo",
+        "B) Leonardo da Vinci",
+        "C) Pablo Picasso",
+        "D) Van Gogh"
+      ],
+      "resposta_correta": "B"
+    }
+  ]
+}
